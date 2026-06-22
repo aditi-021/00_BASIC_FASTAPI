@@ -1,7 +1,7 @@
 ### "todos", id, title, description, completed, created_at -> updated_at
 
 from datetime import datetime
-from sqlalchemy import DateTime, String, Text, func
+from sqlalchemy import DateTime, String, Text, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.utils.base import Base
@@ -21,6 +21,9 @@ class TodoDB(Base):
         DateTime(),
         server_default=func.now()  
     )
+    
+    user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    #CASCADE - when user deleted, all the entries with user_id is deleted, when ondelete = ignore then not deleted
     
     
     

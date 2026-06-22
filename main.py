@@ -4,6 +4,7 @@
 """
 from fastapi import FastAPI
 from src.todo.router import todoRoute
+from src.auth.router import authRouter
 from src.utils.settings import setting
 from contextlib import asynccontextmanager
 from src.utils.base import Base, engine
@@ -25,3 +26,4 @@ def Health():
 
 
 app.include_router(todoRoute, prefix="/v1")
+app.include_router(authRouter, prefix="/v1")
