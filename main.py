@@ -5,20 +5,23 @@
 from fastapi import FastAPI
 from src.todo.router import todoRoute
 from src.auth.router import authRouter
+from src.ai.router import aiRoute
 from src.utils.settings import setting
 from contextlib import asynccontextmanager
 from src.utils.base import Base, engine
 
-## using this funtion as context manager
-@asynccontextmanager
-async def onStart(app):
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+### the funstion not needed when we have ambelic and table i
+# ## using this funtion as context manager
+# @asynccontextmanager
+# async def onStart(app):
+#     async with engine.begin() as conn:
+#         await conn.run_sync(Base.metadata.create_all)
         
-    print("DB Connection Done")
-    yield
+#     print("DB Connection Done")
+#     yield
+#app = FastAPI(lifespan=onStart)
 
-app = FastAPI(lifespan=onStart )
+app = FastAPI()
 
 @app.get("/health")
 def Health():
@@ -27,3 +30,4 @@ def Health():
 
 app.include_router(todoRoute, prefix="/v1")
 app.include_router(authRouter, prefix="/v1")
+app.include_router(aiRoute, prefix="/v1")

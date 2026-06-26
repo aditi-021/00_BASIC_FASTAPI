@@ -4,6 +4,8 @@ from src.todo.controllers import getAllTask, createNewTask, deleteTask
 from src.todo.dtos import TodoCreateDTO, TodoReturnResponse
 from src.utils.base import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.ai.todo import get_todo_object
+
 todoRoute = APIRouter(prefix="/todo")
 
 ## path params, query params
@@ -20,6 +22,12 @@ async def getOneTodo(todoId:int):
 
 @todoRoute.post("/", response_model=TodoReturnResponse)
 async def createNewTodo(todoData:TodoCreateDTO, db:AsyncSession = Depends(get_db)):
+    return await createNewTask(todoData, db)
+
+# @todoRoute.post("/todo-ai", response_model=TodoReturnResponse)
+@todoRoute.post("/todo-ai")
+async def createNewTodo(todoData:TodoCreateDTO = Depends(get_todo_object), db:AsyncSession = Depends(get_db)):
+    # print("AI: ", )
     return await createNewTask(todoData, db)
 
 

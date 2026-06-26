@@ -6,6 +6,9 @@ class TodoCreateDTO(BaseModel):
     description: str = ""
     completed: bool = False
 
+class TodoAiCreateDTO(BaseModel):
+    raw_query:str
+
 
 class TodoReturnResponse(BaseModel):
     title : str

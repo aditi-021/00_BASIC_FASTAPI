@@ -6,6 +6,7 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str
     OPENAI_API_KEY: str
+    ANTHROPIC_API_KEY: str
     DEBUG : bool = True
     AUTH_SECRET_KEY: str
 
